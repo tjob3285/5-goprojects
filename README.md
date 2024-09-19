@@ -14,14 +14,30 @@ export PATH=$PATH:$(go env GOPATH)/bin
 1) ToDo list
 
     [x]  Create CSV file with ID, Description, CreatedAt, isComplete
-    []  Add ToDo list item with description and created at
-    []  Complete "id param" marks isComplete as true
-    []  List shows all not complete tasks, flag -a shows all
-    []  Delete by id
+    [x]  Add ToDo list item with description and created at
+    [x]  Complete "id param" marks isComplete as true
+    [x]  List shows all not complete tasks, flag -a shows all
+    [x]  Delete by id
 
-    []   encoding/csv for writing out as a csv file
-    []   strconv for turning types into strings and visa versa
+    [x]   encoding/csv for writing out as a csv file
+    [x]   strconv for turning types into strings and visa versa
     []   text/tabwriter for writing out tab aligned output
-    []   os for opening and reading files
-    []   github.com/spf13/cobra for the command line interface
+    [x]   os for opening and reading files
+    [x]   github.com/spf13/cobra for the command line interface
     []   github.com/mergestat/timediff for displaying relative friendly time differences (1 hour ago, 10 minutes ago, etc)
+
+2) Backend API
+
+    []  Add
+    []  Subtract
+    []  Multiply
+    []  Divide
+
+    a. Extras
+        []  Add in rate limiter to prevent misuse of the API
+        []  Add in token authentication to prevent anyone unauthorized from using the API
+        []  Add in a database to keep track of all of the calculations that have taken place
+        []  Add in support for floating point numbers as well.
+        []  Create an associated http client that can work with the calculator API.
+        []  Create a frontend that makes use of your API.
+        []  Add in a middleware that adds a request ID to the http.Request object.
