@@ -11,7 +11,7 @@ go env to see path
 export GOPATH='/Users/tylerjob/go/bin' 
 export PATH=$PATH:$(go env GOPATH)/bin
 
-1) ToDo list
+## ToDo list
 
     [x]  Create CSV file with ID, Description, CreatedAt, isComplete
     [x]  Add ToDo list item with description and created at
@@ -26,14 +26,14 @@ export PATH=$PATH:$(go env GOPATH)/bin
     [x]   github.com/spf13/cobra for the command line interface
     []   github.com/mergestat/timediff for displaying relative friendly time differences (1 hour ago, 10 minutes ago, etc)
 
-2) Backend API
+## Backend API
 
     []  Add
     []  Subtract
     []  Multiply
     []  Divide
 
-    a. Extras
+    - Extras
         []  Add in rate limiter to prevent misuse of the API
         []  Add in token authentication to prevent anyone unauthorized from using the API
         []  Add in a database to keep track of all of the calculations that have taken place
