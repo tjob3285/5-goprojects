@@ -28,10 +28,11 @@ export PATH=$PATH:$(go env GOPATH)/bin
 
 ## Backend API
 
-    []  Add
-    []  Subtract
-    []  Multiply
-    []  Divide
+    [x]  Add
+    [x]  Subtract
+    [x]  Multiply
+    [x]  Divide
+    [x]  Sum
 
     - Extras
         []  Add in rate limiter to prevent misuse of the API

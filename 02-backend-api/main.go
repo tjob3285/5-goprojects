@@ -4,7 +4,9 @@ import (
 	"encoding/json"
 	"fmt"
 	"log"
+	"log/slog"
 	"net/http"
+	"os"
 )
 
 func main() {
@@ -18,6 +20,8 @@ func main() {
 	log.Fatal(http.ListenAndServe(":8080", nil))
 }
 
+var logger = slog.New(slog.NewJSONHandler(os.Stdout, nil))
+
 type InputNumbers struct {
 	FirstNumber  int `json:"num1"`
 	SecondNumber int `json:"num2"`
@@ -26,6 +30,7 @@ type InputNumbers struct {
 func add(w http.ResponseWriter, req *http.Request) {
 	w.Header().Set("Content-Type", "application/json")
 	if req.Method != "POST" {
+		logger.Info("Invalid method")
 		w.WriteHeader(http.StatusMethodNotAllowed)
 		return
 	}
@@ -132,10 +137,34 @@ func divide(w http.ResponseWriter, req *http.Request) {
 	w.Write(resultJSON)
 }
 
+type Sum struct {
+	Numbers []int `json:"numbers"`
+}
+
 // array of variable length as input
 func sum(w http.ResponseWriter, req *http.Request) {
+	w.Header().Set("Content-Type", "application/json")
 	if req.Method != "POST" {
-
+		w.WriteHeader(http.StatusMethodNotAllowed)
+		return
 	}
-	fmt.Println("sum endpoint")
+
+	var i Sum
+	err := json.NewDecoder(req.Body).Decode(&i)
+	if err != nil {
+		return
+	}
+
+	result := 0
+	for j := 0; j < len(i.Numbers); j++ {
+		result += i.Numbers[j]
+	}
+
+	resultJSON, err := json.Marshal(result)
+	if err != nil {
+		return
+	}
+	w.WriteHeader(http.StatusOK)
+	w.Write(resultJSON)
+
 }
