@@ -1,14 +1,17 @@
 /*
 Copyright © 2024 NAME HERE <EMAIL ADDRESS>
-
 */
 package cmd
 
 import (
 	"fmt"
+	"time"
 
 	"github.com/spf13/cobra"
 )
+
+var todos []Todo
+var nextID int
 
 // addCmd represents the add command
 var addCmd = &cobra.Command{
@@ -21,7 +24,17 @@ Cobra is a CLI library for Go that empowers applications.
 This application is a tool to generate the needed files
 to quickly create a Cobra application.`,
 	Run: func(cmd *cobra.Command, args []string) {
-		fmt.Println("add called")
+		todo := Todo{
+			ID:          nextID,
+			Description: args[0],
+			CreatedAt:   time.Now(),
+			IsCompleted: false,
+		}
+
+		todos = append(todos, todo)
+		nextID++
+		SaveTodos(todos)
+		fmt.Println("Added: ", todo.Description)
 	},
 }
 

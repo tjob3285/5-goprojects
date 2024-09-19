@@ -1,11 +1,11 @@
 /*
 Copyright © 2024 NAME HERE <EMAIL ADDRESS>
-
 */
 package cmd
 
 import (
 	"fmt"
+	"strconv"
 
 	"github.com/spf13/cobra"
 )
@@ -20,8 +20,18 @@ and usage of using your command. For example:
 Cobra is a CLI library for Go that empowers applications.
 This application is a tool to generate the needed files
 to quickly create a Cobra application.`,
+	Args: cobra.ExactArgs(1),
 	Run: func(cmd *cobra.Command, args []string) {
-		fmt.Println("delete called")
+		id, _ := strconv.Atoi(args[0])
+		for i, todo := range todos {
+			if todo.ID == id {
+				todos = append(todos[:i], todos[i+1:]...)
+				SaveTodos(todos)
+				fmt.Println("Deleted todo:", todo.Description)
+				return
+			}
+		}
+		fmt.Println("Todo not found")
 	},
 }
 

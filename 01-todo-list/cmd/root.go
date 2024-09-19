@@ -4,7 +4,10 @@ Copyright © 2024 NAME HERE <EMAIL ADDRESS>
 package cmd
 
 import (
+	"encoding/csv"
 	"os"
+	"strconv"
+	"time"
 
 	"github.com/spf13/cobra"
 )
@@ -41,4 +44,71 @@ func init() {
 	// Cobra also supports local flags, which will only run
 	// when this action is called directly.
 	rootCmd.Flags().BoolP("toggle", "t", false, "Help message for toggle")
+
+	var err error
+	todos, err = LoadTodos()
+	if err == nil {
+		nextID = len(todos)
+	} else {
+		nextID = 0
+	}
+}
+
+type Todo struct {
+	ID          int
+	Description string
+	CreatedAt   time.Time
+	IsCompleted bool
+}
+
+const csvFile = "todolist.csv"
+
+// Load from csv
+func LoadTodos() ([]Todo, error) {
+	file, err := os.Open(csvFile)
+	if err != nil {
+		return nil, err
+	}
+
+	defer file.Close()
+
+	reader := csv.NewReader(file)
+	records, err := reader.ReadAll()
+	if err != nil {
+		return nil, err
+	}
+
+	var todos []Todo
+	for _, record := range records[1:] {
+		id, _ := strconv.Atoi(record[0])
+		description := record[1]
+		createdAt, _ := time.Parse(time.RFC3339, record[2])
+		isCompleted, _ := strconv.ParseBool(record[3])
+
+		todos = append(todos, Todo{ID: id, Description: description, CreatedAt: createdAt, IsCompleted: isCompleted})
+	}
+	return todos, nil
+}
+
+// SaveTodos saves todos to the CSV file
+func SaveTodos(todos []Todo) error {
+	file, err := os.Create(csvFile)
+	if err != nil {
+		return err
+	}
+	defer file.Close()
+
+	writer := csv.NewWriter(file)
+	defer writer.Flush()
+
+	writer.Write([]string{"ID", "Description", "CreatedAt", "IsCompleted"})
+	for _, todo := range todos {
+		writer.Write([]string{
+			strconv.Itoa(todo.ID),
+			todo.Description,
+			todo.CreatedAt.Format(time.RFC3339),
+			strconv.FormatBool(todo.IsCompleted),
+		})
+	}
+	return nil
 }
