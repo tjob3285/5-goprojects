@@ -50,7 +50,7 @@ func init() {
 	if err == nil {
 		nextID = len(todos)
 	} else {
-		nextID = 0
+		nextID = 1
 	}
 }
 

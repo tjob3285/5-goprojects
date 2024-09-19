@@ -21,18 +21,15 @@ Cobra is a CLI library for Go that empowers applications.
 This application is a tool to generate the needed files
 to quickly create a Cobra application.`,
 	Run: func(cmd *cobra.Command, args []string) {
-		for _, todo := range todos {
-			status := " "
-			if todo.IsCompleted {
-				status = "✓"
-			}
-			fmt.Printf("%d: %s [%s] - Created at %s\n", todo.ID, todo.Description, status, todo.CreatedAt.Format(time.RFC3339))
-		}
+		listItems(all)
 	},
 }
 
+var all bool
+
 func init() {
 	rootCmd.AddCommand(listCmd)
+	listCmd.Flags().BoolVarP(&all, "all", "a", false, "Show all items, including incomplete ones")
 
 	// Here you will define your flags and configuration settings.
 
@@ -43,4 +40,19 @@ func init() {
 	// Cobra supports local flags which will only run when this command
 	// is called directly, e.g.:
 	// listCmd.Flags().BoolP("toggle", "t", false, "Help message for toggle")
+}
+
+func listItems(showAll bool) {
+	for _, todo := range todos {
+		status := " "
+		if todo.IsCompleted {
+			status = "✓"
+		}
+
+		if showAll || !todo.IsCompleted {
+			fmt.Printf("%d: %s [%s] - Created at %s\n", todo.ID, todo.Description, status, todo.CreatedAt.Format(time.RFC3339))
+		} else if showAll && todo.IsCompleted {
+			fmt.Printf("%d: %s [%s] - Created at %s\n", todo.ID, todo.Description, status, todo.CreatedAt.Format(time.RFC3339))
+		}
+	}
 }
