@@ -1,5 +1,11 @@
+/*
+Copyright © 2024 NAME HERE <EMAIL ADDRESS>
+
+*/
 package main
 
-func main() {
+import "example/todolist/cmd"
 
+func main() {
+	cmd.Execute()
 }
