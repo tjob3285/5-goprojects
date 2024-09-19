@@ -7,6 +7,7 @@ import (
 	"encoding/csv"
 	"os"
 	"strconv"
+	"syscall"
 	"time"
 
 	"github.com/spf13/cobra"
@@ -65,12 +66,18 @@ const csvFile = "todolist.csv"
 
 // Load from csv
 func LoadTodos() ([]Todo, error) {
-	file, err := os.Open(csvFile)
+	// open file with lock to prevent concurrent read/writes
+	file, err := os.OpenFile(csvFile, os.O_RDWR|os.O_CREATE, os.ModePerm)
 	if err != nil {
 		return nil, err
 	}
 
-	defer file.Close()
+	if err := syscall.Flock(int(file.Fd()), syscall.LOCK_EX); err != nil {
+		_ = file.Close()
+		return nil, err
+	}
+
+	defer syscall.Flock(int(file.Fd()), syscall.LOCK_UN)
 
 	reader := csv.NewReader(file)
 	records, err := reader.ReadAll()
