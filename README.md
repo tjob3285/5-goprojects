@@ -1,38 +1,28 @@
 # 5-goprojects
-
-https://github.com/dreamsofcode-io/goprojects
-
-https://go.dev/doc/effective_go
-
-To set path if go install not working:
-
-go env to see path
-
-export GOPATH='/Users/tylerjob/go/bin' 
-export PATH=$PATH:$(go env GOPATH)/bin
+The goal of this repo is to get started using go in a real scenario and using go's standard library as well as a few popular external packages
 
 ## ToDo list
+    To set path if go install not working:
 
-    [x]  Create CSV file with ID, Description, CreatedAt, isComplete
-    [x]  Add ToDo list item with description and created at
-    [x]  Complete "id param" marks isComplete as true
-    [x]  List shows all not complete tasks, flag -a shows all
-    [x]  Delete by id
+    go env to see path
 
-    [x]   encoding/csv for writing out as a csv file
-    [x]   strconv for turning types into strings and visa versa
+    export GOPATH='/Users/tylerjob/go/bin' 
+    export PATH=$PATH:$(go env GOPATH)/bin
+
+    a cli application that allows a user to add, delete, update, list, and list all to do tasks
+    - cobra for building cli applications
+	- encoding/csv
+	- os
+	- strconv
+	- syscall
+	- time
+
     []   text/tabwriter for writing out tab aligned output
-    [x]   os for opening and reading files
-    [x]   github.com/spf13/cobra for the command line interface
     []   github.com/mergestat/timediff for displaying relative friendly time differences (1 hour ago, 10 minutes ago, etc)
 
 ## Backend API
-
-    [x]  Add
-    [x]  Subtract
-    [x]  Multiply
-    [x]  Divide
-    [x]  Sum
+    a web server that acts as a calulator with add, subtract, divide, mulitply, and sum endpoints
+    - net/http
 
     - Extras
         []  Add in rate limiter to prevent misuse of the API
@@ -42,3 +32,12 @@ export PATH=$PATH:$(go env GOPATH)/bin
         []  Create an associated http client that can work with the calculator API.
         []  Create a frontend that makes use of your API.
         []  Add in a middleware that adds a request ID to the http.Request object.
+
+## Web Scraper
+    a web scraper that checks links and sublinks for dead links (ie 400 vs 200). Also using go routines
+    - net/url
+	- strings
+	- sync
+    - golang.org/x/net/html
+
+## URL Shortener

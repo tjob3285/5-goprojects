@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        body {
+            background-color: #151515;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-top: 10%;
+        }
+
+        h1 {
+            color: #EEEEEE
+        }
+
+        input {
+            width: 50%;
+            background: #151515;
+            border: none;
+            border-bottom-style: solid;
+            border-bottom-width: 1px;
+            border-bottom-color: #A91D3A;
+            color: #EEEEEE;
+            flex-grow: 2;
+        }
+
+        input:focus {
+            outline: none;
+        }
+
+        button {
+            background-color: #A91D3A; 
+            border: none; 
+            color: #EEEEEE; 
+            padding: 10px; 
+            border-radius: 3px;
+            margin-left: -70px;
+            margin-bottom: 5px;
+            cursor: pointer;
+        }
+    </style>
+    <script>
+        function copyToClipboard() {
+            const url = document.getElementById("shortened-url")
+            url.select();
+            document.execCommand("copy")
+
+            const buttonText = document.getElementById("copy-button")
+            buttonText.innerText = 'Copied'
+        }
+    </script>
+    <title>Form</title>
+</head>
+    <body>
+        <h1>URL Shortener</h1>
+        <input type="text" id="shortened-url" name="url" placeholder="Enter Link Here" readonly value="{{.ShortURL}}" />
+        <button type="submit" id="copy-button" onclick="copyToClipboard()">Copy</button>
+    </body>
+</html>

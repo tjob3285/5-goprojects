@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        body {
+            background-color: #151515;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-top: 10%;
+        }
+
+        h1 {
+            color: #EEEEEE
+        }
+        
+        form {
+            display: flex;
+            flex-direction: row;
+            margin-left: auto;
+            margin-right: auto;
+            width: 60%;
+        }
+
+        input {
+            width: 50%;
+            background: #151515;
+            border: none;
+            border-bottom-style: solid;
+            border-bottom-width: 1px;
+            border-bottom-color: #A91D3A;
+            color: #EEEEEE;
+            flex-grow: 2;
+        }
+
+        input:focus {
+            outline: none;
+        }
+
+        button {
+            background-color: #A91D3A; 
+            border: none; 
+            color: #EEEEEE; 
+            padding: 10px; 
+            border-radius: 3px;
+            margin-left: -70px;
+            margin-bottom: 5px;
+            cursor: pointer;
+        }
+    </style>
+    <title>Form</title>
+</head>
+    <body>
+        <h1>URL Shortener</h1>
+        <form action="/shorten" method="POST">
+            <input type="text" name="url" placeholder="Enter Link Here" />
+            <button type="submit">Shorten</button>
+        </form>
+    </body>
+</html>
