@@ -31,7 +31,7 @@ func shorten(w http.ResponseWriter, r *http.Request) {
 	shortKey := generateKey()
 	urlStore[shortKey] = longURL
 
-	shortenedURL := fmt.Sprintf("http://short/%s", shortKey)
+	shortenedURL := fmt.Sprintf("http://localhost:8080/short/%s", shortKey)
 	render(w, "templates/result.html", map[string]string{"ShortURL": shortenedURL})
 }
 
