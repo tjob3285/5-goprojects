@@ -155,10 +155,7 @@ func sum(w http.ResponseWriter, req *http.Request) {
 		return
 	}
 
-	result := 0
-	for j := 0; j < len(i.Numbers); j++ {
-		result += i.Numbers[j]
-	}
+	result := sumNumbers(i.Numbers...)
 
 	resultJSON, err := json.Marshal(result)
 	if err != nil {
@@ -167,4 +164,13 @@ func sum(w http.ResponseWriter, req *http.Request) {
 	w.WriteHeader(http.StatusOK)
 	w.Write(resultJSON)
 
+}
+
+func sumNumbers(nums ...int) int {
+	result := 0
+	for _, num := range nums {
+		result += num
+	}
+
+	return result
 }
